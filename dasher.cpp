@@ -3,10 +3,10 @@
 int main() {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int windowWidth{512};
+    const int windowHeight{380};
 
-    InitWindow(screenWidth, screenHeight, "Dapper Dasher");
+    InitWindow(windowWidth, windowHeight, "Dapper Dasher");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ int main() {
     {
         // Update
         //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
+        // TODO: Update variables here
         //----------------------------------------------------------------------------------
 
         // Draw
