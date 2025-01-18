@@ -19,12 +19,17 @@ int main() {
     scarfyPos.x = windowWidth / 2 - scarfyRec.width / 2;
     scarfyPos.y = windowHeight - scarfyRec.height;
 
+    int frame{}; // current animation frame
+
     // is the rectangle in the air?
     bool isInAir{};   
     // jump velocity
     const int jumpVel{-600}; // pixels/s
 
     int velocity{0};
+
+    const float updateTime{1.0f / 12.0f}; // time for each frame update
+    float runningTime{0.0f}; // time accumulator
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -34,7 +39,17 @@ int main() {
     {
         // Calculate elapsed time since last frame
         const float dT{GetFrameTime()};
+        runningTime += dT;
 
+        // Update animation frame
+        if (runningTime >= updateTime) {
+            runningTime = 0.0f;
+            scarfyRec.x = frame * scarfyRec.width;
+            frame++;
+            if (frame > 5) {
+                frame = 0;
+            }
+        }
         // Draw
         //----------------------------------------------------------------------------------
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
