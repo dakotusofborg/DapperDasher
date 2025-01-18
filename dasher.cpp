@@ -11,7 +11,10 @@ int main() {
 
     // nebula variables
     Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
-    Rectangle nebRec;
+    Rectangle nebRec{0.0, 0.0, nebula.width/8, nebula.height/8};
+    Vector2 nebPos{windowWidth, windowHeight - nebRec.height};
+
+    int nebVel{-600}; // velocity of the nebula (pizels/s)
 
     // scarfy variables 
     Texture2D  scarfy = LoadTexture("textures/scarfy.png");
@@ -47,7 +50,7 @@ int main() {
         runningTime += dT;
 
         // Update animation frame
-        if (runningTime >= updateTime) {
+        if (!isInAir && runningTime >= updateTime) {
             runningTime = 0.0f;
             scarfyRec.x = frame * scarfyRec.width;
             frame++;
@@ -55,7 +58,10 @@ int main() {
                 frame = 0;
             }
         }
-        // Draw
+        // Update nebula position
+        DrawTextureRec(nebula, nebRec, nebPos, WHITE);
+
+        // Draw scarfy position 
         //----------------------------------------------------------------------------------
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
         
@@ -85,7 +91,8 @@ int main() {
 
         // Update
         //----------------------------------------------------------------------------------
-        scarfyPos.y += velocity * dT; // update position with new velocity
+        nebPos.x += nebVel * dT; // update nebula position with new velocity
+        scarfyPos.y += velocity * dT; // update scarfy position with new velocity
         //----------------------------------------------------------------------------------
 
         EndDrawing();
