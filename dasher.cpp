@@ -9,6 +9,11 @@ int main() {
     InitWindow(windowWidth, windowHeight, "Dapper Dasher");
     const int gravity{1'000}; // acceleration due to gravity (pixels/s)/s
 
+    // nebula variables
+    Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
+    Rectangle nebRec;
+
+    // scarfy variables 
     Texture2D  scarfy = LoadTexture("textures/scarfy.png");
     Rectangle scarfyRec; 
     scarfyRec.width = scarfy.width/6;
@@ -90,6 +95,7 @@ int main() {
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(scarfy);    // Unload scarfy texture
+    UnloadTexture(nebula);    // Unload nebula texture
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
