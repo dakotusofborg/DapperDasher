@@ -7,7 +7,7 @@ int main() {
     const int windowHeight{380};
 
     InitWindow(windowWidth, windowHeight, "Dapper Dasher");
-    const int gravity{1}; // acceleration due to gravity (pixels/frame)/frame
+    const int gravity{1'000}; // acceleration due to gravity (pixels/s)/s
 
     Texture2D  scarfy = LoadTexture("textures/scarfy.png");
     Rectangle scarfyRec; 
@@ -22,7 +22,7 @@ int main() {
     // is the rectangle in the air?
     bool isInAir{};   
     // jump velocity
-    const int jumpVel{-22}; 
+    const int jumpVel{-600}; // pixels/s
 
     int velocity{0};
 
@@ -32,6 +32,8 @@ int main() {
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        // Calculate elapsed time since last frame
+        const float dT{GetFrameTime()};
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -52,7 +54,7 @@ int main() {
         else 
         {
             // rectangle is in the air
-            velocity += gravity;
+            velocity += gravity * dT;
             isInAir = true;
         }
         
@@ -63,7 +65,7 @@ int main() {
 
         // Update
         //----------------------------------------------------------------------------------
-        scarfyPos.y += velocity; // update position with new velocity
+        scarfyPos.y += velocity * dT; // update position with new velocity
         //----------------------------------------------------------------------------------
 
         EndDrawing();
