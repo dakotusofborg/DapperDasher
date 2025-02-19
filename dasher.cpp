@@ -35,24 +35,23 @@ int main() {
 
     // AnimData for nebula
     Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
-    AnimData nebData{
-        {0.0, 0.0, static_cast<float>(nebula.width) / 8, static_cast<float>(nebula.height) / 8}, // Rectangle rec
-        {static_cast<float>(windowDimensions[0]), static_cast<float>(windowDimensions[1]) - static_cast<float>(nebula.height) / 8}, // Vector2 pos
-        0, // int frame
-        1.0 / 12.0, // float updateTime
-        0.0 // float runningTime
-    };
+  
+    AnimData nebulae[3] = {};
 
-    // AnimData for second nebula
-    AnimData neb2Data{
-        {0.0, 0.0, static_cast<float>(nebula.width) / 8, static_cast<float>(nebula.height) / 8}, // Rectangle rec
-        {static_cast<float>(windowDimensions[0] + 300), static_cast<float>(windowDimensions[1]) - static_cast<float>(nebula.height) / 8}, // Vector2 pos
-        0, // int frame
-        1.0 / 16.0, // float updateTime
-        0.0 // float runningTime
-    };
+    for (int i = 0; i < 3; i++) {
+        nebulae[i].rec.x = 0.0f;
+        nebulae[i].rec.y = 0.0f;
+        nebulae[i].rec.width = nebula.width / 8;
+        nebulae[i].rec.height = nebula.height / 8;
+        nebulae[i].pos.y = windowDimensions[1] - nebula.height / 8;
+        nebulae[i].frame = 0;
+        nebulae[i].runningTime = 0.0;
+        nebulae[i].updateTime = 0.0;
+    }
 
-    AnimData nebulae[2] = {nebData, neb2Data};
+    nebulae[0].pos.x = windowDimensions[0];
+    nebulae[1].pos.x = windowDimensions[0] + 300;
+    nebulae[2].pos.x = windowDimensions[0] + 600;
 
     int nebVel{-200}; // velocity of the nebula (pixels/s)
 
@@ -84,7 +83,7 @@ int main() {
         }
 
         // Update nebula animation frame
-        nebData.runningTime += dT;
+        nebulae[0].runningTime += dT;
         if (nebulae[0].runningTime >= nebulae[0].updateTime) {
             nebulae[0].runningTime = 0.0f;
             nebulae[0].rec.x = nebulae[0].frame * nebulae[0].rec.width;
