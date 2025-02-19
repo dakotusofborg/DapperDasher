@@ -1,5 +1,14 @@
 #include "raylib.h"
 
+struct AnimData
+{
+    Rectangle rec;
+    Vector2 pos;
+    int frame;
+    float updateTime;
+    float runningTime;
+};
+
 int main() {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -9,11 +18,21 @@ int main() {
     InitWindow(windowWidth, windowHeight, "Dapper Dasher");
     const int gravity{1'000}; // acceleration due to gravity (pixels/s)/s
 
-    // nebula variables
+    // scarfy variables
     Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
+    AnimData scarfyData;
+    scarfyData.rec.width = scarfy.width/6;
+    scarfyData.rec.height = scarfy.height;
+    scarfyData.rec.x = 0;
+    scarfyData.rec.y = 0;
+    scarfyData.pos.x = windowWidth/2 - scarfyData.rec.width/2;
+    scarfyData.pos.y = windowHeight - scarfyData.rec.height;
+    scarfyData.frame = 0;
+    scarfyData.updateTime = 1.0/12.0;
+    scarfyData.runningTime = 0.0;
+
     Rectangle nebRec{0.0, 0.0, nebula.width/8, nebula.height/8};
     Vector2 nebPos{windowWidth, windowHeight - nebRec.height};
-
     Rectangle neb2Rec{0.0, 0.0, nebula.width/8, nebula.height/8};
     Vector2 neb2Pos{windowWidth + 300, windowHeight - neb2Rec.height};
 
