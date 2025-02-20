@@ -83,6 +83,9 @@ int main() {
 
     int velocity{0};
 
+    Texture2D background = LoadTexture("textures/far-buildings.png");
+    float bgX{};
+
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
@@ -92,6 +95,18 @@ int main() {
         // Calculate elapsed time since last frame
         const float dT{GetFrameTime()};
         scarfyData.runningTime += dT;
+
+        // Draw
+        //----------------------------------------------------------------------------------
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        //update background position
+        bgX -= 20 * dT;
+
+        // draw background
+        Vector2 bgPos{bgX, 0.0};
+        DrawTextureEx(background, bgPos, 0.0, 2.0, WHITE);
 
         // Update scarfy animation frame
         if (!isInAir) {
@@ -128,13 +143,6 @@ int main() {
         // Update scarfy's position
         scarfyData.pos.y += velocity * dT;
 
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-
         for (int i = 0; i < sizeOfNebulae; i++) {
             // draw nebula
             DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
@@ -151,6 +159,7 @@ int main() {
     //--------------------------------------------------------------------------------------
     UnloadTexture(scarfy);    // Unload scarfy texture
     UnloadTexture(nebula);    // Unload nebula texture
+    UnloadTexture(background);    // Unload background texture
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
