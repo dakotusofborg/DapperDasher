@@ -74,6 +74,8 @@ int main() {
         nebulae[i].updateTime = 1.0 / 12.0;
     }
 
+    float finishLine{nebulae[sizeOfNebulae - 1].pos.x};
+
     int nebVel{-200}; // velocity of the nebula (pixels/s)
 
     // is the rectangle in the air?
@@ -172,6 +174,9 @@ int main() {
             // update nebula positions
             nebulae[i].pos.x += nebVel * dT;
         }
+
+        // Update finishLine position
+        finishLine += nebVel * dT;
         
         // Update scarfy's position
         scarfyData.pos.y += velocity * dT;
