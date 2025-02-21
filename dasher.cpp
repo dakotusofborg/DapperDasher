@@ -175,19 +175,46 @@ int main() {
             nebulae[i].pos.x += nebVel * dT;
         }
 
+        bool collision{};
+        for(AnimData nebula : nebulae) {
+            float pad{50};
+            Rectangle nebRec{
+                nebula.pos.x + pad,
+                nebula.pos.y + pad,
+                nebula.rec.width - 2 * pad,
+                nebula.rec.height - 2 * pad
+            };
+            Rectangle scarfyRec{
+                scarfyData.pos.x,
+                scarfyData.pos.y,
+                scarfyData.rec.width,
+                scarfyData.rec.height
+            };
+            if (CheckCollisionRecs(nebRec, scarfyRec)) {
+                collision = true;
+            }
+        }
+
+        if (collision) {
+            // lose the game
+        } 
+        else {
+            for (int i = 0; i < sizeOfNebulae; i++) {
+                // draw nebula
+                DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+            }
+    
+            // Draw scarfy
+            DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+        }
+
         // Update finishLine position
         finishLine += nebVel * dT;
         
         // Update scarfy's position
         scarfyData.pos.y += velocity * dT;
 
-        for (int i = 0; i < sizeOfNebulae; i++) {
-            // draw nebula
-            DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
-        }
-
-        // Draw scarfy
-        DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+        
 
         EndDrawing();
         //----------------------------------------------------------------------------------
